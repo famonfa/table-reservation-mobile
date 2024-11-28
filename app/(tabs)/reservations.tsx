@@ -5,21 +5,18 @@ import { Text } from "../../components/ui/text";
 import { Calendar } from "../../components/calendar";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
-import { fetchReservationsByDate } from "../../store/reservationSlice";
+import {
+  fetchReservationsByDate,
+  ReservationStatus,
+  type Reservation,
+} from "../../store/reservationSlice";
 
-interface Reservation {
-  id: string;
-  reservationTime: string;
-  partySize: number;
-  status: string;
-  user: {
-    name: string;
-    phone: string;
+// Create a type for the status styles
+type StatusStylesType = {
+  [key in ReservationStatus]: {
+    backgroundColor: string;
   };
-  table: {
-    number: number;
-  };
-}
+};
 
 export default function Reservation() {
   const [selected, setSelected] = useState("");
@@ -99,7 +96,9 @@ export default function Reservation() {
                     <Text variant="subtitle">
                       Table {reservation.table.number}
                     </Text>
-                    <View style={[styles.statusBadge]}>
+                    <View
+                      style={[styles.statusBadge, styles[reservation.status]]}
+                    >
                       <Text style={styles.statusText}>
                         {reservation.status}
                       </Text>
@@ -122,14 +121,28 @@ export default function Reservation() {
   );
 }
 
+const statusStyles: StatusStylesType = {
+  pending: {
+    backgroundColor: "#F59E0B",
+  },
+  confirmed: {
+    backgroundColor: "#10B981",
+  },
+  cancelled: {
+    backgroundColor: "#EF4444",
+  },
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: palette.background,
+    padding: 16,
+    gap: 20,
   },
   scrollContainer: {
     flex: 1,
-    padding: 16,
+    padding: 1,
   },
   centerContent: {
     flex: 1,

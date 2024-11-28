@@ -7,7 +7,6 @@ export const store = configureStore({
     reducer: {
         restaurants: restaurantSlice,
         reservations: reservationReducer,
-
     }
 })
 

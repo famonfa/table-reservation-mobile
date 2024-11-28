@@ -1,12 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { API_BASE_URL } from './restaurantSlice';
 
-interface Reservation {
+export type ReservationStatus = "pending" | "confirmed" | "cancelled";
+
+export interface Reservation {
   id: string;
   reservationTime: string;
   reservationDate: string;
   partySize: number;
-  status: string;
+  status: ReservationStatus;
   user: {
     name: string;
     phone: string;
@@ -16,7 +18,7 @@ interface Reservation {
   };
 }
 
-interface ReservationState {
+export interface ReservationState {
   reservations: Reservation[];
   loading: boolean;
   error: string | null;
