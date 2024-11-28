@@ -10,8 +10,9 @@ import {
   ReservationStatus,
   type Reservation,
 } from "../../store/reservationSlice";
+import { Card, CardContent } from "../../components/ui/card";
+import { Image } from "expo-image";
 
-// Create a type for the status styles
 type StatusStylesType = {
   [key in ReservationStatus]: {
     backgroundColor: string;
@@ -78,6 +79,15 @@ export default function Reservation() {
         ) : sortedHours.length === 0 ? (
           <View style={styles.centerContent}>
             <Text variant="body">No reservations for this date</Text>
+            <Image
+              source={require("../../assets/woman.png")}
+              style={{
+                width: 500,
+                height: 500,
+                resizeMode: "contain",
+                marginTop: 24,
+              }}
+            />
           </View>
         ) : (
           sortedHours.map((hour) => (
@@ -91,27 +101,31 @@ export default function Reservation() {
                 </Text>
               </View>
               {groupedReservations[hour].map((reservation) => (
-                <View key={reservation.id} style={styles.reservationCard}>
-                  <View style={styles.reservationHeader}>
-                    <Text variant="subtitle">
-                      Table {reservation.table.number}
-                    </Text>
-                    <View
-                      style={[styles.statusBadge, styles[reservation.status]]}
-                    >
-                      <Text style={styles.statusText}>
-                        {reservation.status}
+                <Card key={reservation.id} style={styles.reservationCard}>
+                  <CardContent>
+                    <View style={styles.reservationHeader}>
+                      <Text variant="subtitle">
+                        Table {reservation.table.number}
+                      </Text>
+                      <View
+                        style={[styles.statusBadge, styles[reservation.status]]}
+                      >
+                        <Text style={styles.statusText}>
+                          {reservation.status}
+                        </Text>
+                      </View>
+                    </View>
+                    <View style={styles.reservationDetails}>
+                      <Text variant="body">Guest: {reservation.user.name}</Text>
+                      <Text variant="body">
+                        Party size: {reservation.partySize}
+                      </Text>
+                      <Text variant="body">
+                        Phone: {reservation.user.phone}
                       </Text>
                     </View>
-                  </View>
-                  <View style={styles.reservationDetails}>
-                    <Text variant="body">Guest: {reservation.user.name}</Text>
-                    <Text variant="body">
-                      Party size: {reservation.partySize}
-                    </Text>
-                    <Text variant="body">Phone: {reservation.user.phone}</Text>
-                  </View>
-                </View>
+                  </CardContent>
+                </Card>
               ))}
             </View>
           ))

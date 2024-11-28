@@ -14,6 +14,7 @@ interface ButtonProps {
   variant?: "primary" | "secondary";
   style?: ViewStyle;
   textStyle?: TextStyle;
+  disabled?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -22,6 +23,7 @@ export const Button: React.FC<ButtonProps> = ({
   variant = "primary",
   style,
   textStyle,
+  disabled,
 }) => {
   return (
     <TouchableOpacity

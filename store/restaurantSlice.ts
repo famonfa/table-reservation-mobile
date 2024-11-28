@@ -1,6 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
-export const API_BASE_URL = 'https://9b95-181-84-47-157.ngrok-free.app';
+export const API_BASE_URL = 'https://table-reservation-api-xabx.onrender.com';
 
 interface RestaurantState {
     restaurants: Restaurant[];
